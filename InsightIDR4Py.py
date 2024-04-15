@@ -223,6 +223,8 @@ class InsightIDR(object):
         }
         # filter the parameters to be only those with a supplied value
         params = {key:val for key, val in params.items() if val}
+        if 'index' not in params:
+            params["index"] = 0
         # get the initial set of investigations
         url = self.investigations_url
         self.session.headers["Accept-version"] = "investigations-preview"
@@ -234,8 +236,8 @@ class InsightIDR(object):
         investigations.extend(result["data"])
         # iterate through remaining investigations and add them to the output list
         while len(investigations) < total:
-            params["index"] += 100
-            response = self.session.get(url, params)
+            params["index"] += 1
+            response = self.session.get(url, params=params)
             result = response.json()
             investigations.extend(result["data"])
 
