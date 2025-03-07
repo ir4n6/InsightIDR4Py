@@ -99,7 +99,7 @@ class InsightIDR(object):
                 cont = True
                 while cont:
                     continue_url = r.json()["links"][0]["href"]
-                    r = self.session.get(continue_url, headers=headers)
+                    r = self.session.get(continue_url)
                     if r.status_code != 202:
                         cont = False
                         break
@@ -107,7 +107,7 @@ class InsightIDR(object):
                 events.extend(r.json()["events"])
                 if "links" in r.json():
                     continue_url = r.json()["links"][0]["href"]
-                    r = self.session.get(continue_url, headers=headers)
+                    r = self.session.get(continue_url)
                 else:
                     run = False
             else:
